@@ -1,0 +1,6 @@
+@mancs_radar_server_HostAddress = http://localhost:5141
+
+GET {{mancs_radar_server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
