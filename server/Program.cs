@@ -1,5 +1,13 @@
+using mancs_radar_server.Data;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<MancsRadarDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sql => sql.UseNetTopologySuite()));
 // Add services to the container.
 
 builder.Services.AddControllers();
