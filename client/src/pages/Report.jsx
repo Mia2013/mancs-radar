@@ -1,5 +1,11 @@
+import DogReportForm from "../components/DogReportForm";
+
 const Report = () => {
-	return <div>Bejelentés</div>;
+  return (
+    <div>
+      <DogReportForm />
+    </div>
+  );
 };
 
 export default Report;

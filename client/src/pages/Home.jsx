@@ -4,7 +4,6 @@ import Wave from "../components/Wave";
 import HeroMap from "../components/Home/HeroMap";
 import Mission from "../components/Home/Mission";
 import Steps from "../components/Home/Steps";
-import CallToAction from "../components/Home/CallToAction";
 
 const Home = () => {
   return (
@@ -14,8 +13,6 @@ const Home = () => {
       <Mission />
       <Wave from="background.default" to="brand.ink" />
       <Steps />
-      <Wave from="brand.ink" to="primary.main" flip />
-      <CallToAction />
     </div>
   );
 };

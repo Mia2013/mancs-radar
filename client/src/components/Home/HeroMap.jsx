@@ -22,6 +22,9 @@ import CheckIcon from "@mui/icons-material/Check";
 import CircleIcon from "@mui/icons-material/Circle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
+import dayjs from "dayjs";
+import "dayjs/locale/hu";
+
 import BudapestMap from "./BudapestMap";
 import MapPin from "./MapPin";
 
@@ -99,6 +102,7 @@ const HeroMap = () => {
   const viewBox = isMobile ? VIEWBOX.mobile : VIEWBOX.desktop;
   const [mapElement, setMapElement] = useState(null);
   const [reached, setReached] = useState({});
+  const today = dayjs().locale("hu").format("YYYY. MMMM D., dddd");
 
   useEffect(() => {
     const timers = Object.entries(TIMING).map(([key, ms]) =>
@@ -301,13 +305,13 @@ const HeroMap = () => {
             <Chip
               size="small"
               icon={<CircleIcon />}
-              label="Keresik"
+              label="Elveszett"
               sx={{ "& .MuiChip-icon": { color: "seeker.main" } }}
             />
             <Chip
               size="small"
               icon={<CircleIcon />}
-              label="Megtalálták"
+              label="Talált"
               sx={{ "& .MuiChip-icon": { color: "primary.main" } }}
             />
           </Stack>
@@ -352,15 +356,26 @@ const HeroMap = () => {
                         variant="caption"
                         sx={{ color: "text.secondary" }}
                       >
-                        csütörtök, szeptember 25.
+                        {today}
                       </Typography>
                     </Stack>
                     <Card variant="outlined">
                       <CardHeader
-                        avatar={<Avatar src="/logo_2.png" variant="rounded" />}
+                      sx={{pb: 1}}
+                        avatar={
+                          <Avatar
+                            src="/logo_2.png"
+                            variant="rounded"
+                            sx={{
+                              width: 40,
+                              height: 40,
+                              bgcolor: "transparent",
+                              "& img": { objectFit: "contain" },
+                            }}
+                          />
+                        }
                         title="MancsRadar"
                         subheader="most"
-                        sx={{height: '100%'}}
                       />
                       <CardContent>
                         <Typography

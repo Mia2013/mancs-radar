@@ -1,4 +1,5 @@
-﻿using mancs_radar_server.Models;
+﻿using mancs_radar_server.Data.Seed;
+using mancs_radar_server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace mancs_radar_server.Data
@@ -14,14 +15,16 @@ namespace mancs_radar_server.Data
         public DbSet<Address> Addresses => Set<Address>();
         public DbSet<Dog> Dogs => Set<Dog>();
         public DbSet<DogPhoto> DogPhotos => Set<DogPhoto>();
+        public DbSet<DogBreed> DogBreeds => Set<DogBreed>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+              .Property(u => u.Role)
+              .HasConversion<string>()
+              .HasMaxLength(20);
 
             modelBuilder.Entity<Shelter>()
                 .HasMany(s => s.Users)
@@ -43,16 +46,22 @@ namespace mancs_radar_server.Data
                 .HasForeignKey(s => s.AddressId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<DogBreed>(e =>
+            {
+                e.Property(b => b.Name).HasMaxLength(100);
+                e.HasIndex(b => b.Name).IsUnique();
+                e.Property(b => b.DogSize).HasConversion<string>().HasMaxLength(20);
+                e.HasData(DogBreedSeed.Breeds);
+            });
+
             modelBuilder.Entity<Dog>(e =>
             {
                 e.Property(d => d.Sex).HasConversion<string>().HasMaxLength(20);
-                e.Property(d => d.Size).HasConversion<string>().HasMaxLength(20);
                 e.Property(d => d.ReportType).HasConversion<string>().HasMaxLength(20);
                 e.Property(d => d.Status).HasConversion<string>().HasMaxLength(20);
-
+                e.Property(d => d.BreedType).HasConversion<string>().HasMaxLength(20);
+                e.Property(d => d.Size).HasConversion<string>().HasMaxLength(20);
                 e.Property(d => d.Name).HasMaxLength(100);
-                e.Property(d => d.Breed).HasMaxLength(100);
-                e.Property(d => d.Color).HasMaxLength(100);
                 e.Property(d => d.ChipNumber).HasMaxLength(15);
 
                 e.HasIndex(d => d.ChipNumber);
@@ -67,6 +76,7 @@ namespace mancs_radar_server.Data
                     .WithMany()
                     .HasForeignKey(d => d.ReporterShelterId)
                     .OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(d => d.Breed).WithMany().HasForeignKey(d => d.BreedId).OnDelete(DeleteBehavior.Restrict);
 
                 e.ToTable(t => t.HasCheckConstraint(
                     "CK_Dogs_Reporter",
@@ -84,6 +94,7 @@ namespace mancs_radar_server.Data
                     .IsUnique()
                     .HasFilter("[IsDefault] = 1");
             });
+
         }
     }
 }

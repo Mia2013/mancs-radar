@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const controllers = {
     AUTH: "Auth",
-    CARS: "Cars",
-    RENTALS: "Rentals"
+    BREEDS: "Breeds",
+    DOGS: "Dogs",
 };
 
 export const endpoints = {
@@ -11,23 +11,12 @@ export const endpoints = {
     loginUser: `${controllers.AUTH}/login`,
     updateUser: `${controllers.AUTH}/update`,
     getUser: `${controllers.AUTH}/getuser`,
-
-    getCars: `${controllers.CARS}/getall`,
-    updateCar: `${controllers.CARS}/updatecar`,
-    deleteCar: `${controllers.CARS}/deletecar`,
-    addCar: `${controllers.CARS}/addcar`,
-
-    getAllRents: `${controllers.RENTALS}/getall`,
-    updateRent: `${controllers.RENTALS}/updaterent`,
-    invoiceRent: `${controllers.RENTALS}/invoicerent`,
-    getRentsByCar: `${controllers.RENTALS}/getrents`,
-    addNewRent: `${controllers.RENTALS}/addnewrent`,
-    
-
+    getBreeds: `${controllers.BREEDS}/getAll`,
+    createDogReport: `${controllers.DOGS}/createDogReport`,
 };
 
 export const instance = axios.create({
-    baseURL: "https://localhost:7011",
+    baseURL: "https://localhost:7032/api",
     headers: {
         "Content-Type": "application/json",
     },

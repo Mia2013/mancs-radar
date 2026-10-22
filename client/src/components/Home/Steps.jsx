@@ -19,7 +19,7 @@ const Steps = () => {
       component="section"
       id="hogyan-mukodik"
       className="dark"
-      sx={{ bgcolor: "brand.ink", color: "text.primary", py: 4 }}
+      sx={{ bgcolor: "brand.ink", color: "text.primary", pt: 4, pb:8 }}
     >
       <Container maxWidth="lg">
         <Typography variant="h2" sx={{ mb: 4 }}>

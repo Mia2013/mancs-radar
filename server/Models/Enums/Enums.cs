@@ -1,11 +1,9 @@
 ﻿namespace mancs_radar_server.Models
 {
-    public enum LocationStyle
+    public enum Roles
     {
-        Rooftop,
-        Street,
-        City,
-        ManualPin
+        User,
+        Admin
     }
 
     public enum DogSex
@@ -20,6 +18,12 @@
         Small,
         Medium,
         Large
+    }
+    public enum BreedType
+    {
+        Purebred,
+        Mixed,
+        Unknown
     }
 
     public enum ReportType

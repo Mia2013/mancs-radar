@@ -31,7 +31,7 @@ export const allPages = [
         path: "/report",
         component: Report,
         showInNavbar: true,
-        roles: [ROLES.USER, ROLES.SHELTER, ROLES.ADMIN],
+        roles: ALL_ROLES,
     },
     {
         id: "pet-details",

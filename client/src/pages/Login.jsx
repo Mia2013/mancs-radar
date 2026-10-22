@@ -1,9 +1,7 @@
-import { useAuth } from "../provider/AuthProvider";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
-	const { logIn } = useAuth();
-
-	return <div>Login</div>;
+  return <LoginForm />;
 };
 
 export default Login;

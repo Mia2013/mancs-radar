@@ -64,7 +64,7 @@ const Mission = () => {
                   size="large"
                   startIcon={<SearchIcon />}
                   component={Link}
-                  to="/report"
+                  to="/"
                 >
                   Elveszett a kutyám
                 </Button>
@@ -74,7 +74,7 @@ const Mission = () => {
                   size="large"
                   startIcon={<PetsIcon />}
                   component={Link}
-                  to="/report"
+                  to="/"
                 >
                   Találtam egy kutyát
                 </Button>
