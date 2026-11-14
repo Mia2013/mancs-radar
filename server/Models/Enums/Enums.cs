@@ -36,6 +36,7 @@
     {
         Active,
         Reunited,
-        Closed
+        Closed,
+        Archived
     }
 }

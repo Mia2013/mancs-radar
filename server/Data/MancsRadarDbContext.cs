@@ -63,6 +63,11 @@ namespace mancs_radar_server.Data
                 e.Property(d => d.Size).HasConversion<string>().HasMaxLength(20);
                 e.Property(d => d.Name).HasMaxLength(100);
                 e.Property(d => d.ChipNumber).HasMaxLength(15);
+                e.Property(d => d.City).HasMaxLength(100);
+                e.Property(d => d.District).HasMaxLength(100);
+                e.Property(d => d.ContactInfo).HasMaxLength(200);
+                e.Property(d => d.EditPinCode).HasMaxLength(6);
+                e.Property(d => d.LastSeenLocation).HasColumnType("geography");
 
                 e.HasIndex(d => d.ChipNumber);
                 e.HasIndex(d => new { d.ReportType, d.Status });
@@ -76,11 +81,20 @@ namespace mancs_radar_server.Data
                     .WithMany()
                     .HasForeignKey(d => d.ReporterShelterId)
                     .OnDelete(DeleteBehavior.Cascade);
-                e.HasOne(d => d.Breed).WithMany().HasForeignKey(d => d.BreedId).OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(d => d.LastSeenAddress)
+                    .WithMany()
+                    .HasForeignKey(d => d.LastSeenAddressId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                e.HasOne(d => d.Breed)
+                    .WithMany()
+                    .HasForeignKey(d => d.BreedId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 e.ToTable(t => t.HasCheckConstraint(
                     "CK_Dogs_Reporter",
-                    "([ReporterUserId] IS NOT NULL AND [ReporterShelterId] IS NULL) OR ([ReporterUserId] IS NULL AND [ReporterShelterId] IS NOT NULL)"));
+                    "([ReporterUserId] IS NOT NULL AND [ReporterShelterId] IS NULL) OR ([ReporterUserId] IS NULL AND [ReporterShelterId] IS NULL)"));
             });
 
             modelBuilder.Entity<DogPhoto>(e =>

@@ -15,7 +15,7 @@ namespace mancs_radar_server.Services
 
         public async Task<ServiceResult> GetAllAsync()
         {
-            var breeds = await _context.DogBreed
+            var breeds = await _context.DogBreeds
                 .OrderBy(b => b.Name)
                 .Select(b => DogBreedDto.FromDogBreed(b))
                 .ToListAsync();

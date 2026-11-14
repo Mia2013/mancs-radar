@@ -18,6 +18,7 @@ builder.Services.AddDbContext<MancsRadarDbContext>(options =>
 builder.Services.AddScoped<PasswordHasher<User>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBreedService, BreedService>();
+builder.Services.AddScoped<IDogService, DogService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

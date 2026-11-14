@@ -151,15 +151,31 @@ namespace mancs_radar_server.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.PrimitiveCollection<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactInfo")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EditPinCode")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<int?>("LastSeenAddressId")
                         .HasColumnType("int");
@@ -216,7 +232,7 @@ namespace mancs_radar_server.Migrations
 
                     b.ToTable("Dogs", t =>
                         {
-                            t.HasCheckConstraint("CK_Dogs_Reporter", "([ReporterUserId] IS NOT NULL AND [ReporterShelterId] IS NULL) OR ([ReporterUserId] IS NULL AND [ReporterShelterId] IS NOT NULL)");
+                            t.HasCheckConstraint("CK_Dogs_Reporter", "([ReporterUserId] IS NOT NULL AND [ReporterShelterId] IS NULL) OR ([ReporterUserId] IS NULL AND [ReporterShelterId] IS NULL)");
                         });
                 });
 
@@ -247,7 +263,7 @@ namespace mancs_radar_server.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("DogBreed");
+                    b.ToTable("DogBreeds");
 
                     b.HasData(
                         new
@@ -1874,7 +1890,8 @@ namespace mancs_radar_server.Migrations
 
                     b.HasOne("mancs_radar_server.Models.Address", "LastSeenAddress")
                         .WithMany()
-                        .HasForeignKey("LastSeenAddressId");
+                        .HasForeignKey("LastSeenAddressId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("mancs_radar_server.Models.Shelter", "ReporterShelter")
                         .WithMany()
