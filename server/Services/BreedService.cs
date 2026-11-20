@@ -1,5 +1,5 @@
 ﻿using mancs_radar_server.Data;
-using mancs_radar_server.DTOs;
+using mancs_radar_server.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace mancs_radar_server.Services
@@ -17,7 +17,7 @@ namespace mancs_radar_server.Services
         {
             var breeds = await _context.DogBreeds
                 .OrderBy(b => b.Name)
-                .Select(b => DogBreedDto.FromDogBreed(b))
+                .Select(b => b.ToDto())
                 .ToListAsync();
 
             return ServiceResult.Ok("Fajták sikeresen lekérdezve!", breeds);

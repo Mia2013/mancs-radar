@@ -31,34 +31,5 @@ namespace mancs_radar_server.DTOs
 
         public string? ContactInfo { get; set; }
         public string? EditPinCode { get; set; }
-
-        public static DogResponseDto FromDog(Dog dog, bool includePin = false)
-        {
-            return new DogResponseDto
-            {
-                Id = dog.Id,
-                Name = dog.Name,
-                BreedType = dog.BreedType,
-                BreedId = dog.BreedId,
-                BreedName = dog.Breed?.Name,
-                Sex = dog.Sex,
-                Size = dog.Size,
-                Color = dog.Color,
-                Description = dog.Description,
-                ChipNumber = dog.ChipNumber,
-                ReportType = dog.ReportType,
-                Status = dog.Status,
-                Latitude = dog.LastSeenLocation?.Y,
-                Longitude = dog.LastSeenLocation?.X,
-                City = dog.City,
-                District = dog.District,
-                LastSeenAt = dog.LastSeenAt,
-                CreatedAt = dog.CreatedAt,
-                ReporterUserId = dog.ReporterUserId,
-                ReporterShelterId = dog.ReporterShelterId,
-                ContactInfo = dog.ContactInfo,
-                EditPinCode = includePin ? dog.EditPinCode : null
-            };
-        }
     }
 }

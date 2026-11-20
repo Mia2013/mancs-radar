@@ -1,5 +1,6 @@
 using mancs_radar_server.Data;
 using mancs_radar_server.DTOs;
+using mancs_radar_server.Mappings;
 using mancs_radar_server.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -45,7 +46,7 @@ namespace mancs_radar_server.Services
                     .OrderByDescending(d => d.CreatedAt)
                     .ToListAsync();
 
-                var dtos = dogs.Select(d => DogResponseDto.FromDog(d)).ToList();
+                var dtos = dogs.Select(d => d.ToDto()).ToList();
 
                 return ServiceResult.Ok("Kutyák sikeresen lekérdezve!", dtos);
             }
@@ -62,22 +63,9 @@ namespace mancs_radar_server.Services
                 if (string.IsNullOrWhiteSpace(dto.ContactInfo) && userId == null)
                     return ServiceResult.Fail(400, "Vendégbejelentéshez szükséges az elérhetőség!");
 
-                var dog = new Dog
-                {
-                    Name = dto.Name,
-                    BreedType = dto.BreedType,
-                    BreedId = dto.BreedId,
-                    Sex = dto.Sex,
-                    Size = dto.Size,
-                    Color = dto.Color,
-                    Description = dto.Description,
-                    ChipNumber = dto.ChipNumber,
-                    ReportType = dto.ReportType,
-                    Status = ReportStatus.Active,
-                    LastSeenAt = dto.LastSeenAt,
-                    CreatedAt = DateTime.UtcNow,
-                    ContactInfo = dto.ContactInfo
-                };
+                var dog = dto.ToEntity();
+                dog.Status = ReportStatus.Active;
+                dog.CreatedAt = DateTime.UtcNow;
 
                 if (userId.HasValue)
                 {
@@ -113,7 +101,7 @@ namespace mancs_radar_server.Services
                 _context.Dogs.Add(dog);
                 await _context.SaveChangesAsync();
 
-                var response = DogResponseDto.FromDog(dog, includePin: !userId.HasValue);
+                var response = dog.ToDto(includePin: !userId.HasValue);
                 return ServiceResult.Ok("Kutya sikeresen rögzítve!", response);
             }
             catch (Exception ex)

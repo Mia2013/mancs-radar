@@ -1,12 +1,13 @@
-﻿using mancs_radar_server.Models;
-
-public class User
+﻿namespace mancs_radar_server.Models
 {
-    public int Id { get; set; }
-    public string Email { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
-    public string? PhoneNumber { get; set; }
-    public Roles Role { get; set; } = Roles.User;
+    public class User
+    {
+        public int Id { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; }
+        public Roles Role { get; set; } = Roles.User;
 
-    public ICollection<Address> Addresses { get; set; } = new List<Address>();
+        public ICollection<Address> Addresses { get; set; } = new List<Address>();
+    }
 }

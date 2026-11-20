@@ -1,5 +1,7 @@
 ﻿using mancs_radar_server.Data;
 using mancs_radar_server.DTOs;
+using mancs_radar_server.Mappings;
+using mancs_radar_server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,12 +32,7 @@ namespace mancs_radar_server.Services
                 return ServiceResult.Fail(409, "Ez az email cím már foglalt!");
             }
 
-            User newUser = new()
-            {
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber,
-                Role = Models.Roles.User
-            };
+            var newUser = dto.ToEntity();
             newUser.PasswordHash = _passwordHasher.HashPassword(newUser, dto.Password);
 
             await _context.Users.AddAsync(newUser);

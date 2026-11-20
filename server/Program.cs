@@ -1,4 +1,5 @@
 using mancs_radar_server.Data;
+using mancs_radar_server.Models;
 using mancs_radar_server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
